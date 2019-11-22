@@ -137,10 +137,10 @@ class DFSTraversal():
 
     def _inorder(self, node):
         if node:
+            #self._inorder(node.left)
             self._inorder(node.left)
             self.results.append(BSTNode(node.key, node.val))
             self._inorder(node.right)
-            self._inorder(node.left)
 
     def preorder(self, bst: BSTTable):
         self._preorder(bst._root)
@@ -167,12 +167,11 @@ input_array = [(4, 'a'), (9, 'c'), (2, 'f'), (3, 'z'), (11, 'i'), (8, 'r')]
 bst = BSTTable()
 for key, val in input_array:
     bst.put(key, val)
-traversal = DFSTraversal(bst, DFSTraversalTypes.PREORDER)
+traversal = DFSTraversal(bst, DFSTraversalTypes.INORDER)
 for node in traversal:
     print(node.key, ', ', node.val)
-'''
 
-'''
+
 t = BSTTable()
 t.put(5, 'a')
 t.put(15, 'a')
@@ -184,10 +183,9 @@ t.put(-5, 'b')
 print(t._root)
 print(t.remove(35))
 print(t._root)
-'''
 
 
-'''
+
 t = BSTTable()
 t.put(5, 'a')
 #t.put(1, 'b')
@@ -196,10 +194,10 @@ t.put(5, 'a')
 #print(t._root)
 #print(t._removemin(t._root))
 print(t.remove(10))
-'''
 
 
-'''
+
+
 t = BSTTable()
 t.put(5, 'a')
 t.put(1, 'b')

@@ -81,26 +81,27 @@ class NaivePriorityQueue(PriorityQueue):
         return smallest
 
 class HeapPriorityQueue(PriorityQueue):
-    def put(self, val):
-        if len(self.elements) > self.max_size:
-            raise IndexError("Priority queue is full.")
-        heapElements = MinHeap(self.elements)
-        heapElements.heappush(val)
-        self.elements = heapElements.elements
+    def __init__(self, max_size):
+        self.elements = MinHeap([])
+        self.max_size = max_size
 
-    def get(self):
+    def put(self, key: int) -> None:
+        if len(self.elements) + 1 > self.max_size:
+            raise IndexError("Priority queue is full.")
+        else:
+            self.elements.heappush(key)
+
+    def get(self) -> int:
         if len(self.elements) == 0:
             raise IndexError("There is nothing to get.")
-        heapElements = MinHeap(self.elements)
-        smallest = heapElements.heappop()
-        self.elements = heapElements.elements
-        return smallest
+        else:
+        	return self.elements.heappop()
 
     def peek(self):
         if len(self.elements) == 0:
             raise IndexError("There is nothing in the list.")
-        return self.elements[0]
-
+        else:
+            return self.elements.elements[0]
 
 class PythonHeapPriorityQueue(PriorityQueue):
     def put(self, val):

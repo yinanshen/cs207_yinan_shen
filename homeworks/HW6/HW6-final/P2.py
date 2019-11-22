@@ -60,16 +60,14 @@ class Heap:
         min_idx = idx
         left_idx = 2 * idx + 1
         right_idx = 2 * idx + 2
-
         if left_idx < self.size and self.compare(min_idx, left_idx):
             min_idx = left_idx
-
         if right_idx < self.size and self.compare(min_idx, right_idx):
             min_idx = right_idx
-
         if min_idx != idx:
             self.swap(idx,min_idx)
             self.heapify(min_idx)
+
 
     def build_heap(self) -> None:
         for i in range(self.size // 2, -1, -1):
@@ -78,17 +76,42 @@ class Heap:
     def heappush(self, key: int) -> None:
         self.size += 1
         self.elements += [key]
-        self.build_heap()
+        self.pushhelper(self.size-1)
+
+    def pushhelper(self, idx: int) -> None:
+      if idx > 0:
+          parent = self.parent(idx)
+          if self.compare(parent , idx):
+              self.swap(parent, idx)
+              self.pushhelper(parent)
 
     def heappop(self) -> int:
         if (len(self.elements) == 0):
             raise IndexError("Nothing to pop")
         smallest = self.elements[0]
-        #self.elements = self.elements[1 : self.size]
-        self.elements.remove(smallest)
+        self.swap(0, self.size - 1)
+        self.elements.pop()
         self.size -= 1
-        self.build_heap()
+        if self.size > 0:
+            self.pophelper(0)
         return smallest
+
+    def pophelper(self, idx: int) -> None:
+      left = self.left(idx)
+      right = self.right(idx)
+      if left < self.size:
+        if right < self.size:
+          if self.compare(right, left):
+            if self.compare(idx,left):
+              self.swap(left, idx)
+              self.pophelper(left)
+          else:
+            if self.compare(idx,left):
+              self.swap(right, idx)
+              self.pophelper(right)
+        else:
+          if self.compare(idx, left):
+            self.swap(left, idx)
 
 class MinHeap(Heap):
     def compare(self, a: int, b: int):
@@ -116,5 +139,4 @@ print(mn)
 
 h = MinHeap([-1,0,0,15,23,1,2,3])
 print(h)
-
 '''
